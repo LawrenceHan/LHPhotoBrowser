@@ -8,6 +8,7 @@
 
 #import "IWPhotoBrowserManager.h"
 #import "MWPhotoBrowser.h"
+#import "IWPhotoCameraPermissionManager.h"
 
 @interface IWPhotoBrowserManager () <MWPhotoBrowserDelegate>
 
@@ -125,10 +126,8 @@
 }
 
 - (void)loadAssets {
-    if (NSClassFromString(@"PHAsset") != nil) {
-        
-        // TODO: Use photo permission manager
-        // Check library permissions
+    BOOL hasPermission = [[IWPhotoCameraPermissionManager sharedInstance] checkPhotoPermission];
+    if (hasPermission) {
         PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
         if (status == PHAuthorizationStatusNotDetermined) {
             [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
@@ -139,7 +138,6 @@
         } else if (status == PHAuthorizationStatusAuthorized) {
             [self performLoadAssets];
         }
-        
     }
 }
 
