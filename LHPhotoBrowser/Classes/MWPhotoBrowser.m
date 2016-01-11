@@ -16,6 +16,7 @@
 #import "SDImageCache.h"
 #import "UIImage+MWPhotoBrowser.h"
 #import "UIImage+AspectFit.h"
+#import "ReactiveCocoa.h"
 
 #define PADDING                  10
 
