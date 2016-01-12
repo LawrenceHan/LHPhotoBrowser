@@ -235,7 +235,7 @@
         // MARK: - Original code
         // Zooms standard portrait images on a 3.5in screen but not on a 4in screen.
         if (ABS(boundsAR - imageAR) < 0.17) {
-            zoomScale = MIN(xScale, yScale);
+            zoomScale = MAX(xScale, yScale);
             // Ensure we don't zoom in or out too far, just in case
             zoomScale = MIN(MAX(self.minimumZoomScale, zoomScale), self.maximumZoomScale);
         }
@@ -273,12 +273,10 @@
         maxScale = 4;
     }
     
-    /* // MARK: - Zoom
     // Image is smaller than screen so no zooming!
     if (xScale >= 1 && yScale >= 1) {
         minScale = 1.0;
     }
-    */
     
     // Set min/max zoom
     self.maximumZoomScale = maxScale;
@@ -286,7 +284,7 @@
     
     // Initial zoom
     self.zoomScale = self.minimumZoomScale;
-    //self.zoomScale = [self initialZoomScaleWithMinScale];
+    self.zoomScale = [self initialZoomScaleWithMinScale];
     
     // If we're zooming to fill then centralise
     if (self.zoomScale != minScale) {
